@@ -1,26 +1,150 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-sora);
+  --font-display: var(--font-sora);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@theme {
+  --color-surface: #0b0b0f;
+  --color-surface-2: #14141b;
+  --color-roxo: #9b07f0;
+  --color-roxo-light: #bf56fc;
+  --color-roxo-deep: #440a69;
+}
+
+:root {
+  color-scheme: dark;
+  --background: #000000;
+  --foreground: #f4f4f6;
+  --card: #0b0b0f;
+  --card-foreground: #f4f4f6;
+  --popover: #14141b;
+  --popover-foreground: #f4f4f6;
+  --primary: #9b07f0;
+  --primary-foreground: #ffffff;
+  --secondary: #14141b;
+  --secondary-foreground: #f4f4f6;
+  --muted: #14141b;
+  --muted-foreground: #9a9aa5;
+  --accent: #14141b;
+  --accent-foreground: #f4f4f6;
+  --destructive: #f87171;
+  --border: #23232d;
+  --input: #23232d;
+  --ring: #bf56fc;
+  --radius: 0.75rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-roxo-light);
+    outline-offset: 2px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.text-metal {
+  background: linear-gradient(180deg, #ffeeee 0%, #cecece 55%, #737373 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-glow {
+  background:
+    radial-gradient(60% 80% at 15% 0%, rgba(155, 7, 240, 0.18), transparent 60%),
+    radial-gradient(50% 70% at 100% 10%, rgba(191, 86, 252, 0.14), transparent 55%),
+    var(--background);
+}
+
+.photo-fade {
+  -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+}
+
+.grid-lines {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(70% 60% at 50% 30%, #000, transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-fade-up {
+    animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+  .animate-glow {
+    animation: glow-pulse 7s ease-in-out infinite;
+  }
+  .marquee-track {
+    animation: marquee 32s linear infinite;
+  }
+}
+
+.marquee {
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.75; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
